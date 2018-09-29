@@ -18,7 +18,11 @@ class ViewController: UIViewController {
     
     
     var prevLocation = CGPoint(x: 0, y: 0)      // variable to capute prev location
-    var shipPlaced = false                      // bool to lock only one ship in the scene
+    var shipPlaced: Bool = false {  // bool to lock only one ship in the scene
+        didSet {
+            sceneView.debugOptions = shipPlaced ? [] : [.showFeaturePoints] //Hide Feature points based on ships existence or not.
+        }
+    }
     
     /*
      This function removes all objects (nodes) placed in the scene
@@ -159,7 +163,7 @@ extension ViewController: ARSCNViewDelegate {
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         
         // We safely unwrap the anchor argument as an ARPlaneAnchor to get information the flat surface at hand.
-        guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
+        guard let planeAnchor = anchor as? ARPlaneAnchor, !shipPlaced else { return }
         
         // creating an SCNPlane to visualize the ARPlaneAnchor
         let width = CGFloat(planeAnchor.extent.x)
