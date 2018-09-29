@@ -1,9 +1,9 @@
 //
-//  AppDelegate.swift
-//  ARKitHorizontalPlaneDemo
+//  ViewController.swift
+//  AR KIT tutorial
 //
-//  Created by Jayven Nhan on 11/14/17.
-//  Copyright © 2017 Jayven Nhan. All rights reserved.
+//  Created by Karthik Nayak, Deavin Hester, Dagmawi Nadew, Yacob Alemneh on 8/30/18.
+//  Copyright © 2018 Team - eye_Ohh_ess. All rights reserved.
 //
 
 import UIKit
