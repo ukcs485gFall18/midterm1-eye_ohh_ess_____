@@ -30,6 +30,7 @@ class ViewController: UIViewController {
         shipPlaced = false
     }
     
+    //This function gets called everytime the user slides the UISlider
     @IBAction func rotate3DObject(_ sender: UISlider) {
         
         sceneView.scene.rootNode.enumerateChildNodes {[weak self] (node, stop) in
@@ -37,6 +38,7 @@ class ViewController: UIViewController {
         }
     }
     
+    //This function rotates the 3D object in the ARSCNView
     private func rotate(_ node: SCNNode, with value: Float){
         node.eulerAngles.y = value // Changing the Y value makes the 3D object rotate around the y-axis
     }
