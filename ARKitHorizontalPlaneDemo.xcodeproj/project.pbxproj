@@ -291,9 +291,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 74R9B42L62;
+				DEVELOPMENT_TEAM = G2DJ3Q6TF8;
 				INFOPLIST_FILE = ARKitHorizontalPlaneDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ARtest2.ARKitHorizontalPlaneDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -307,9 +307,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 74R9B42L62;
+				DEVELOPMENT_TEAM = G2DJ3Q6TF8;
 				INFOPLIST_FILE = ARKitHorizontalPlaneDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ARtest2.ARKitHorizontalPlaneDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";

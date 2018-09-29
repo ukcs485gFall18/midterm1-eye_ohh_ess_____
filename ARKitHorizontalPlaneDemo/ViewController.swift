@@ -14,6 +14,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var sceneView: ARSCNView!
     @IBOutlet weak var resetButton: UIButton!
     
+    @IBOutlet weak var rotationSlider: UISlider!
+    
+    
     var prevLocation = CGPoint(x: 0, y: 0)      // variable to capute prev location
     var shipPlaced = false                      // bool to lock only one ship in the scene
     
@@ -27,11 +30,24 @@ class ViewController: UIViewController {
         shipPlaced = false
     }
     
+    @IBAction func rotate3DObject(_ sender: UISlider) {
+        
+        sceneView.scene.rootNode.enumerateChildNodes {[weak self] (node, stop) in
+            self?.rotate(node, with: sender.value)
+        }
+    }
+    
+    private func rotate(_ node: SCNNode, with value: Float){
+        node.eulerAngles.y = value // Changing the Y value makes the 3D object rotate around the y-axis
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         addTapGestureToSceneView()      // long press gesture with 0 delay to take advantage of release gensture
         configureLighting()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,6 +59,7 @@ class ViewController: UIViewController {
         super.viewWillDisappear(animated)
         sceneView.session.pause()
     }
+
     
     func setUpSceneView() {
         let configuration = ARWorldTrackingConfiguration()
@@ -113,7 +130,7 @@ class ViewController: UIViewController {
     
     
     func addTapGestureToSceneView() {
-        let tapGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.addShipToSceneView(withGestureRecognizer:)))
+        let tapGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(addShipToSceneView))
         tapGestureRecognizer.minimumPressDuration = 0
         sceneView.addGestureRecognizer(tapGestureRecognizer)
     }
@@ -156,7 +173,6 @@ extension ViewController: ARSCNViewDelegate {
         planeNode.position = SCNVector3(x,y,z)
         planeNode.eulerAngles.x = -.pi / 2
         
-        //
         node.addChildNode(planeNode)
     }
     
