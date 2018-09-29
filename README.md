@@ -21,15 +21,19 @@ This tutorial app will allow you to place 3D Objects in AR space and interact w
 - Implemented a multiple nodes 3D object
 
 # Added capabilities:
-- Resizing placed objects - using a slider or pinch gesture
-- Rotating placed objects - using buttons on each side to rotate 90 degrees each time in the corresponding direction
-- Resetting Position - remove all existing objects and start replacement of objects
-- Hover to preview placement - tap and moving the finger across the screen will result in a preview of the 3D object placement with the moving finger
+- Resizing placed objects 
+    - User can resize the object using buttons 
+- Rotating placed objects
+    - The slider on the bottom lets the user rotate the ship across the Z axis 
+- Resetting Position
+    - Pressing this button on the top right corner will remove the ship allow user to re place the ship
+- Hover to preview placement 
+    - Tap and move finger across the screen to preview a white box which will indicate where the ship would be placed
 
 # Links to the original tutorial
-https://www.appcoda.com/arkit-horizontal-plane/
-https://www.appcoda.com/arkit-3d-object/
-https://www.appcoda.com/arkit-introduction-scenekit/
+- https://www.appcoda.com/arkit-horizontal-plane/ 
+- https://www.appcoda.com/arkit-3d-object/
+- https://www.appcoda.com/arkit-introduction-scenekit/
 
 # Members
 - Dagmawi Assefa
