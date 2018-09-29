@@ -1,9 +1,9 @@
 //
 //  ViewController.swift
-//  ARKitHorizontalPlaneDemo
+//  AR KIT tutorial
 //
-//  Created by Jayven Nhan on 11/14/17.
-//  Copyright © 2017 Jayven Nhan. All rights reserved.
+//  Created by Karthik Nayak, Deavin Hester, Dagmawi Nadew, Yacob Alemneh on 8/30/18.
+//  Copyright © 2018 Team - eye_Ohh_ess. All rights reserved.
 //
 
 import UIKit
@@ -12,12 +12,25 @@ import ARKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var sceneView: ARSCNView!
+    @IBOutlet weak var resetButton: UIButton!
+    
+    var prevLocation = CGPoint(x: 0, y: 0)      // variable to capute prev location
+    var shipPlaced = false                      // bool to lock only one ship in the scene
+    
+    /*
+     This function removes all objects (nodes) placed in the scene
+     */
+    @IBAction func resetTapped(_ sender: Any) {
+        sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
+            node.removeFromParentNode()
+        }
+        shipPlaced = false
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addTapGestureToSceneView()
-        
+        addTapGestureToSceneView()      // long press gesture with 0 delay to take advantage of release gensture
         configureLighting()
     }
     
@@ -46,29 +59,65 @@ class ViewController: UIViewController {
         sceneView.automaticallyUpdatesLighting = true
     }
     
-    @objc func addShipToSceneView(withGestureRecognizer recognizer: UIGestureRecognizer) {
-        let tapLocation = recognizer.location(in: sceneView)
-        let hitTestResults = sceneView.hitTest(tapLocation, types: .existingPlaneUsingExtent)
+    /*
+     This function takes in a scene tap location co-ordinates and adds a box node to the scene
+     */
+    func addBox(x: Float = 0, y: Float = 0, z: Float = -0.2) {
+        let box = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0)
         
-        guard let hitTestResult = hitTestResults.first else { return }
-        let translation = hitTestResult.worldTransform.translation
-        let x = translation.x
-        let y = translation.y
-        let z = translation.z
+        let boxNode = SCNNode()
+        boxNode.geometry = box
+        boxNode.position = SCNVector3(x, y, z)
         
-        guard let shipScene = SCNScene(named: "ship.scn"),
-            let shipNode = shipScene.rootNode.childNode(withName: "ship", recursively: false)
-            else { return }
-        
-        
-        shipNode.position = SCNVector3(x,y,z)
-        sceneView.scene.rootNode.addChildNode(shipNode)
+        sceneView.scene.rootNode.addChildNode(boxNode)
     }
     
+    /*
+     This function is called when the tap gesture is activated
+     */
+    @objc func addShipToSceneView(withGestureRecognizer recognizer: UIGestureRecognizer) {
+        
+        let tapLocation = recognizer.location(in: sceneView)
+        
+        if prevLocation != tapLocation && !shipPlaced {
+            
+            prevLocation = tapLocation      // set current tap location to prev
+            resetTapped(0)                  // simulate reset button to remove prev objects
+            
+            let hitTestResults = sceneView.hitTest(tapLocation, types: .existingPlaneUsingExtent)
+            
+            guard let hitTestResult = hitTestResults.first else { return }
+            let translation = hitTestResult.worldTransform.translation
+            
+            addBox(x: translation.x, y: translation.y, z: translation.z)       // add a box to current location to "preview" ship placement
+        }
+        
+        if (recognizer.state == UIGestureRecognizerState.ended) && !shipPlaced {               // when tap is release we want to place the ship
+            resetTapped(0)                                                                     // simulate reset button to remove box node
+            
+            let hitTestResults = sceneView.hitTest(tapLocation, types: .existingPlaneUsingExtent)
+            
+            guard let hitTestResult = hitTestResults.first else { return }
+            let translation = hitTestResult.worldTransform.translation
+            
+            guard let shipScene = SCNScene(named: "ship.scn"),
+                let shipNode = shipScene.rootNode.childNode(withName: "ship", recursively: false)
+                else { return }
+            
+            shipNode.position = SCNVector3(x: translation.x, y: translation.y, z: translation.z)
+            sceneView.scene.rootNode.addChildNode(shipNode)
+            shipPlaced = true
+        }
+        
+    }
+    
+    
     func addTapGestureToSceneView() {
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.addShipToSceneView(withGestureRecognizer:)))
+        let tapGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.addShipToSceneView(withGestureRecognizer:)))
+        tapGestureRecognizer.minimumPressDuration = 0
         sceneView.addGestureRecognizer(tapGestureRecognizer)
     }
+    
 }
 
 extension float4x4 {
@@ -86,45 +135,45 @@ extension UIColor {
 
 extension ViewController: ARSCNViewDelegate {
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        // 1
+        //
         guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
         
-        // 2
+        //
         let width = CGFloat(planeAnchor.extent.x)
         let height = CGFloat(planeAnchor.extent.z)
         let plane = SCNPlane(width: width, height: height)
         
-        // 3
+        //
         plane.materials.first?.diffuse.contents = UIColor.transparentLightBlue
         
-        // 4
+        //
         let planeNode = SCNNode(geometry: plane)
         
-        // 5
+        //
         let x = CGFloat(planeAnchor.center.x)
         let y = CGFloat(planeAnchor.center.y)
         let z = CGFloat(planeAnchor.center.z)
         planeNode.position = SCNVector3(x,y,z)
         planeNode.eulerAngles.x = -.pi / 2
         
-        // 6
+        //
         node.addChildNode(planeNode)
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
-        // 1
+        //
         guard let planeAnchor = anchor as?  ARPlaneAnchor,
             let planeNode = node.childNodes.first,
             let plane = planeNode.geometry as? SCNPlane
             else { return }
         
-        // 2
+        //
         let width = CGFloat(planeAnchor.extent.x)
         let height = CGFloat(planeAnchor.extent.z)
         plane.width = width
         plane.height = height
         
-        // 3
+        //
         let x = CGFloat(planeAnchor.center.x)
         let y = CGFloat(planeAnchor.center.y)
         let z = CGFloat(planeAnchor.center.z)
