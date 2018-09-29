@@ -30,7 +30,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addTapGestureToSceneView()      // long press gesture with 0 delay to take advantage of release gensture
+        addTapGestureToSceneView()
         configureLighting()
     }
     
@@ -111,9 +111,11 @@ class ViewController: UIViewController {
         
     }
     
-    
+    /*
+     This function assign the long press gesture with 0 delay to take advantage of on release functionality
+     */
     func addTapGestureToSceneView() {
-        let tapGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.addShipToSceneView(withGestureRecognizer:)))
+        let tapGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(addShipToSceneView))
         tapGestureRecognizer.minimumPressDuration = 0
         sceneView.addGestureRecognizer(tapGestureRecognizer)
     }
