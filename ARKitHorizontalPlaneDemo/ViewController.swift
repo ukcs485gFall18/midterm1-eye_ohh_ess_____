@@ -51,6 +51,7 @@ class ViewController: UIViewController {
         addTapGestureToSceneView()
         configureLighting()
         
+        addPinchGestureToSceneView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,7 +63,7 @@ class ViewController: UIViewController {
         super.viewWillDisappear(animated)
         sceneView.session.pause()
     }
-
+    
     
     func setUpSceneView() {
         let configuration = ARWorldTrackingConfiguration()
@@ -96,7 +97,7 @@ class ViewController: UIViewController {
      This function is called when the tap gesture is activated
      */
     @objc func addShipToSceneView(withGestureRecognizer recognizer: UIGestureRecognizer) {
-        
+//        print("tap")
         let tapLocation = recognizer.location(in: sceneView)
         
         if prevLocation != tapLocation && !shipPlaced {
@@ -143,62 +144,16 @@ class ViewController: UIViewController {
     }
     
     @objc func pinchToZoom(_ gesture: UIPinchGestureRecognizer) {
-//                guard let nodeToScale = shipObj else { return }
-//                if gesture.state == .changed {
-//
-//                    let pinchScaleX: CGFloat = gesture.scale * CGFloat((nodeToScale.scale.x))
-//                    let pinchScaleY: CGFloat = gesture.scale * CGFloat((nodeToScale.scale.y))
-//                    let pinchScaleZ: CGFloat = gesture.scale * CGFloat((nodeToScale.scale.z))
-//                    nodeToScale.scale = SCNVector3Make(Float(pinchScaleX), Float(pinchScaleY), Float(pinchScaleZ))
-//                    nodeToScale.scale = SCNVector3(Float(pinchScaleX), Float(pinchScaleY), Float(pinchScaleZ))
-//                    gesture.scale = 1
-//
-//                }
-//                if gesture.state == .ended { }
-        
-//        guard let nodeYouScale = shipObj else { return }
-//        let action = SCNAction.scale(by: gesture.scale, duration: 0.1)
-//        nodeYouScale.runAction(action)
-//        gesture.scale = 1
-
-        
-        //        guard let _ = shipObj else { return }
-        //        var originalScale = shipObj?.scale
-        //
-        //        switch gesture.state {
-        //        case .began:
-        //            print("began")
-        //            originalScale = shipObj?.scale
-        //            gesture.scale = CGFloat((shipObj?.scale.x)!)
-        //        case .changed:
-        //            print("changed")
-        //            guard var newScale = originalScale else { return }
-        //            if gesture.scale < 0.5 {
-        //                newScale = SCNVector3Make(0.5, 0.5, 0.5)
-        //            } else if gesture.scale > 2 {
-        //                newScale = SCNVector3Make(2, 2, 2)
-        //            } else {
-        //                newScale = SCNVector3Make(Float(gesture.scale), Float(gesture.scale), Float(gesture.scale))
-        //            }
-        //            shipObj?.scale = newScale
-//                    gesture.scale = 1
-        //        case .ended:
-        //            print("ended")
-        //            guard var newScale = originalScale else { return }
-        //            if gesture.scale < 0.5 {
-        //                newScale = SCNVector3Make(0.5, 0.5, 0.5)
-        //            } else if gesture.scale > 2 {
-        //                newScale = SCNVector3Make(2, 2, 2)
-        //            } else {
-        //                newScale = SCNVector3Make(Float(gesture.scale), Float(gesture.scale), Float(gesture.scale))
-        //            }
-        //            shipObj?.scale = newScale
-        //            gesture.scale = CGFloat((shipObj?.scale.x)!)
-        //        default:
-        //            print("default")
-        //            gesture.scale = 1.0
-        //            originalScale = nil
-        //        }
+//        print("pinch")
+        guard let ship = shipObj else { return }
+        if gesture.state == .began || gesture.state == .changed{
+            
+            let pinch = [Float(gesture.scale) * ship.scale.x,
+                         Float(gesture.scale) * ship.scale.y,
+                         Float(gesture.scale) * ship.scale.z]
+            ship.scale = SCNVector3Make(pinch[0], pinch[1], pinch[2])
+            gesture.scale = 1
+        }
     }
     
     func addPinchGestureToSceneView() {
