@@ -18,8 +18,12 @@ class ViewController: UIViewController {
     
     
     var prevLocation = CGPoint(x: 0, y: 0)      // variable to capute prev location
-    var shipPlaced = false                      // bool to lock only one ship in the scene
     var shipObj: SCNNode!
+    var shipPlaced: Bool = false {  // bool to lock only one ship in the scene
+        didSet {
+            sceneView.debugOptions = shipPlaced ? [] : [.showFeaturePoints] //Hide Feature points based on ships existence or not.
+        }
+    }
     
     /*
      This function removes all objects (nodes) placed in the scene
@@ -33,9 +37,10 @@ class ViewController: UIViewController {
     
     //This function gets called everytime the user slides the UISlider
     @IBAction func rotate3DObject(_ sender: UISlider) {
-        
-        sceneView.scene.rootNode.enumerateChildNodes {[weak self] (node, stop) in
-            self?.rotate(node, with: sender.value)
+        if shipPlaced {
+            sceneView.scene.rootNode.enumerateChildNodes {[weak self] (node, stop) in
+                self?.rotate(node, with: sender.value)
+            }
         }
     }
     
@@ -181,7 +186,7 @@ extension ViewController: ARSCNViewDelegate {
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         
         // We safely unwrap the anchor argument as an ARPlaneAnchor to get information the flat surface at hand.
-        guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
+        guard let planeAnchor = anchor as? ARPlaneAnchor, !shipPlaced else { return }
         
         // creating an SCNPlane to visualize the ARPlaneAnchor
         let width = CGFloat(planeAnchor.extent.x)
