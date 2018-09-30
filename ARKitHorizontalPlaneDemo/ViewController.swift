@@ -136,7 +136,6 @@ class ViewController: UIViewController {
             
             shipObj = shipNode
         }
-        
     }
     
     /*
@@ -148,6 +147,9 @@ class ViewController: UIViewController {
         sceneView.addGestureRecognizer(tapGestureRecognizer)
     }
     
+    /*
+     This function is called when the pinch gesture is activated
+     */
     @objc func pinchToZoom(_ gesture: UIPinchGestureRecognizer) {
 //        print("pinch")
         guard let ship = shipObj else { return }
@@ -161,6 +163,9 @@ class ViewController: UIViewController {
         }
     }
     
+    /*
+     This function assign the pinch gesture
+     */
     func addPinchGestureToSceneView() {
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinchToZoom(_:)))
         sceneView.addGestureRecognizer(pinchGestureRecognizer)
