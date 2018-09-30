@@ -9,6 +9,7 @@
 import UIKit
 import ARKit
 
+
 class ViewController: UIViewController {
     
     @IBOutlet weak var sceneView: ARSCNView!
@@ -32,6 +33,21 @@ class ViewController: UIViewController {
         
         addTapGestureToSceneView()
         configureLighting()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        checkLoggedInStatus()
+    }
+    
+    private func checkLoggedInStatus() {
+        print("checking....")
+        if !Authentication.sharedInstance.isUserLoggedIn {
+            let authVC = AuthVC()
+            present(authVC, animated: true) {
+                print("presenting...")
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
