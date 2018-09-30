@@ -36,9 +36,10 @@ class ViewController: UIViewController {
     
     //This function gets called everytime the user slides the UISlider
     @IBAction func rotate3DObject(_ sender: UISlider) {
-        
-        sceneView.scene.rootNode.enumerateChildNodes {[weak self] (node, stop) in
-            self?.rotate(node, with: sender.value)
+        if shipPlaced {
+            sceneView.scene.rootNode.enumerateChildNodes {[weak self] (node, stop) in
+                self?.rotate(node, with: sender.value)
+            }
         }
     }
     
