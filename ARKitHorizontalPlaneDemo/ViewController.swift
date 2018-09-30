@@ -127,6 +127,8 @@ class ViewController: UIViewController {
             shipNode.position = SCNVector3(x: translation.x, y: translation.y, z: translation.z)
             sceneView.scene.rootNode.addChildNode(shipNode)
             shipPlaced = true
+            
+            shipObj = shipNode
         }
         
     }
