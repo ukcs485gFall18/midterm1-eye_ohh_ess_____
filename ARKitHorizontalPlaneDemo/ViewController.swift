@@ -26,6 +26,8 @@ class ViewController: UIViewController {
     }
     
     /*
+     New Feature
+     Author: Karthik
      This function removes all objects (nodes) placed in the scene
      */
     @IBAction func resetTapped(_ sender: Any) {
@@ -35,6 +37,8 @@ class ViewController: UIViewController {
         shipPlaced = false
     }
     
+    //New Feature
+    // Author: Dagmawi
     //This function gets called everytime the user slides the UISlider
     @IBAction func rotate3DObject(_ sender: UISlider) {
         if shipPlaced {
@@ -44,6 +48,8 @@ class ViewController: UIViewController {
         }
     }
     
+    //New Feature
+    //Author: Dagmawi
     //This function rotates the 3D object in the ARSCNView
     private func rotate(_ node: SCNNode, with value: Float){
         node.eulerAngles.y = value // Changing the Y value makes the 3D object rotate around the y-axis
@@ -99,6 +105,7 @@ class ViewController: UIViewController {
     }
     
     /*
+     Author: Karthik
      This function is called when the tap gesture is activated
      */
     @objc func addShipToSceneView(withGestureRecognizer recognizer: UIGestureRecognizer) {
@@ -138,7 +145,8 @@ class ViewController: UIViewController {
         }
     }
     
-    /*
+    /*New Feature
+     Author: Karthik
      This function assign the long press gesture with 0 delay to take advantage of on release functionality
      */
     func addTapGestureToSceneView() {
@@ -149,6 +157,8 @@ class ViewController: UIViewController {
     }
     
     /*
+     New Feature
+     Author: Deavin
      This function is called when the pinch gesture is activated
      */
     @objc func pinchToZoom(_ gesture: UIPinchGestureRecognizer) {
@@ -164,7 +174,8 @@ class ViewController: UIViewController {
         }
     }
     
-    /*
+    /* New Feature
+     Authors: Deavin, Yacob
      This function assign the pinch gesture
      */
     func addPinchGestureToSceneView() {
@@ -243,6 +254,9 @@ extension ViewController: ARSCNViewDelegate {
 
 
 extension ViewController: UIGestureRecognizerDelegate {
+    //New Functionality
+    //Author: Yacob
+    //Delegate function Allows view to recognize multiple gestures simultaneously
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
