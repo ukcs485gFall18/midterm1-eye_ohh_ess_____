@@ -144,6 +144,7 @@ class ViewController: UIViewController {
     func addTapGestureToSceneView() {
         let tapGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(addShipToSceneView))
         tapGestureRecognizer.minimumPressDuration = 0
+        tapGestureRecognizer.delegate = self
         sceneView.addGestureRecognizer(tapGestureRecognizer)
     }
     
@@ -167,9 +168,13 @@ class ViewController: UIViewController {
      This function assign the pinch gesture
      */
     func addPinchGestureToSceneView() {
-        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinchToZoom(_:)))
+        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinchToZoom))
+        pinchGestureRecognizer.delegate = self
         sceneView.addGestureRecognizer(pinchGestureRecognizer)
     }
+    
+    
+    
     
 }
 
@@ -233,5 +238,12 @@ extension ViewController: ARSCNViewDelegate {
         let y = CGFloat(planeAnchor.center.y)
         let z = CGFloat(planeAnchor.center.z)
         planeNode.position = SCNVector3(x, y, z)
+    }
+}
+
+
+extension ViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }
