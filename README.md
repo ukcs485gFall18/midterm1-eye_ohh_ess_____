@@ -22,7 +22,7 @@ This tutorial app will allow you to place 3D Objects in AR space and interact w
 
 # Added capabilities:
 - Resizing placed objects 
-    - User can resize the object using buttons 
+    - User can resize the object using pinch gestures 
 - Rotating placed objects
     - The slider on the bottom lets the user rotate the ship across the Z axis 
 - Resetting Position
