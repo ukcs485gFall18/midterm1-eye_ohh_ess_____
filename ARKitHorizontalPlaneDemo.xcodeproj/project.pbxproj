@@ -106,7 +106,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0910;
 				LastUpgradeCheck = 1000;
-				ORGANIZATIONNAME = "Jayven Nhan";
+				ORGANIZATIONNAME = eye_Ohh_ess;
 				TargetAttributes = {
 					638A9CE91FBA0605001D52ED = {
 						CreatedOnToolsVersion = 9.1;
