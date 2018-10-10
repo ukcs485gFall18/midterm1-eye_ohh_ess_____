@@ -19,4 +19,6 @@ class Authentication {
     var isUserLoggedIn: Bool {
         return Auth.auth().currentUser != nil
     }
+    
+
 }

@@ -14,13 +14,10 @@ class AuthVC: UIViewController, FUIAuthDelegate {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print("appeared....")
-        view.backgroundColor = .purple
         createFirebaseUI()
     }
     
     private func createFirebaseUI() {
-     
         let authUI = FUIAuth.defaultAuthUI()
         authUI?.delegate = self
         let providers: [FUIAuthProvider] = [FUIGoogleAuth()]
@@ -31,10 +28,9 @@ class AuthVC: UIViewController, FUIAuthDelegate {
 
     func authUI(_ authUI: FUIAuth, didSignInWith user: User?, error: Error?) {
         // handle user and error as necessary
-        
-        if user {
-            return true
-        }
+        guard error == nil, let newUser = user else {return}
+        print(newUser.displayName ?? " ")
+        dismiss(animated: true, completion: nil)
         
     }
 }
